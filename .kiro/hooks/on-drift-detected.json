@@ -1,0 +1,39 @@
+{
+  "name": "on-drift-detected",
+  "description": "Triggered when mathematical or state drift between legacy and modern runtimes exceeds 0.0001",
+  "version": "1.0.0",
+  "trigger": {
+    "type": "event",
+    "event": "parity:drift_exceeded",
+    "threshold": 0.0001
+  },
+  "actions": [
+    {
+      "step": 1,
+      "name": "log_telemetry",
+      "action": "system.telemetry.record",
+      "params": {
+        "severity": "CRITICAL",
+        "message": "Parity divergence detected across legacy/modern runtime bridge."
+      }
+    },
+    {
+      "step": 2,
+      "name": "isolate_divergence_ast",
+      "action": "agent.analyze_diff",
+      "params": {
+        "target": "activeDriftField",
+        "strategy": "symbolic_execution_compare"
+      }
+    },
+    {
+      "step": 3,
+      "name": "auto_heal_patch",
+      "action": "agent.synthesize_patch",
+      "params": {
+        "targetSpec": ".kiro/specs/core-engine.spec.md",
+        "output": "auto_hot_patch"
+      }
+    }
+  ]
+}

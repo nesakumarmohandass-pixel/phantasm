@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden min-h-screen;
+    background-image: 
+      radial-gradient(ellipse at 50% 0%, rgba(120, 119, 198, 0.15), transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(249, 115, 22, 0.08), transparent 40%),
+      radial-gradient(ellipse at 10% 70%, rgba(56, 189, 248, 0.08), transparent 40%);
+  }
+}
+
+/* Authentic Windows 98 / Retro Component Styles */
+.win98-window {
+  background-color: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+  box-shadow: 1px 1px 0px #808080 inset, -1px -1px 0px #404040 inset;
+  font-family: 'MS Sans Serif', Tahoma, 'Segoe UI', sans-serif;
+  color: #000000;
+}
+
+.win98-titlebar {
+  background: linear-gradient(90deg, #000080, #1084d0);
+  color: #ffffff;
+  padding: 3px 6px;
+  font-weight: bold;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.win98-btn {
+  background-color: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+  color: #000000;
+  font-size: 11px;
+  padding: 4px 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.win98-btn:active {
+  border-top: 2px solid #000000;
+  border-left: 2px solid #000000;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  padding: 5px 9px 3px 11px;
+}
+
+.win98-inset {
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* CRT Scanlines Overlay */
+.crt-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.crt-overlay::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 20;
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+}
+
+/* Modern 2026 Glassmorphism */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-panel-glow {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 25px -5px rgba(168, 85, 247, 0.2);
+}
+
+/* Terminal Green Phosphor */
+.terminal-amber {
+  color: #ffb000;
+  text-shadow: 0 0 5px rgba(255, 176, 0, 0.6);
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.terminal-green {
+  color: #33ff33;
+  text-shadow: 0 0 5px rgba(51, 255, 51, 0.6);
+  font-family: 'Courier New', Courier, monospace;
+}
