@@ -1,6 +1,7 @@
 import React from 'react';
 import type { PresetId, FinanceState, OrbitState, LogisticsState } from '../../types';
 import { Monitor, Tv, Play, Pause, Disc } from 'lucide-react';
+import { sound } from '../../core/sound';
 
 interface LegacyViewportProps {
   presetId: PresetId;
@@ -108,7 +109,10 @@ export const LegacyViewport: React.FC<LegacyViewportProps> = ({
         </div>
 
         <button
-          onClick={onToggleCrt}
+          onClick={() => {
+            sound.playDegauss();
+            onToggleCrt();
+          }}
           className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-mono transition-colors ${
             isCrtEnabled
               ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'

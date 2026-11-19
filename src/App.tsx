@@ -1,14 +1,17 @@
 import React from 'react';
 import { Header } from './components/Header';
+import { TimelineScrubber } from './components/TimelineScrubber';
 import { PresetSelector } from './components/PresetSelector';
 import { LegacyViewport } from './components/DualMirror/LegacyViewport';
 import { ModernViewport } from './components/DualMirror/ModernViewport';
 import { ParitySentinel } from './components/DualMirror/ParitySentinel';
+import { ParityTestRunner } from './components/ParityTestRunner';
 import { CodeComparator } from './components/CodeComparator';
 import { SpectralScanner } from './components/SpectralScanner';
 import { SpecsModal } from './components/SpecsModal';
 import { ExportModal } from './components/ExportModal';
 import { PRESETS } from './core/presets';
+import { sound } from './core/sound';
 import type { PresetId, FinanceState, OrbitState, LogisticsState } from './types';
 import { ArrowLeftRight, Ghost } from 'lucide-react';
 
@@ -23,8 +26,9 @@ export function App() {
   const [anomalyDetected, setAnomalyDetected] = React.useState<boolean>(false);
   const [isHealing, setIsHealing] = React.useState<boolean>(false);
 
-  // Viewport Settings
+  // Audio & Viewport Settings
   const [isCrtEnabled, setIsCrtEnabled] = React.useState<boolean>(true);
+  const [soundEnabled, setSoundEnabled] = React.useState<boolean>(true);
 
   // Shared Application States (Synchronized via Lockstep Bridge)
   const [financeState, setFinanceState] = React.useState<FinanceState>({
@@ -53,8 +57,23 @@ export function App() {
 
   const activePreset = PRESETS[activePresetId];
 
+  const handleToggleSound = () => {
+    sound.enabled = !soundEnabled;
+    setSoundEnabled(!soundEnabled);
+    if (!soundEnabled) {
+      sound.playKeyClick();
+    }
+  };
+
+  const handleSelectPreset = (id: PresetId) => {
+    sound.playEraTransition();
+    setActivePresetId(id);
+    setAnomalyDetected(false);
+  };
+
   // Trigger Spectral Scanner Decompilation Animation
   const handleExorciseTrigger = () => {
+    sound.playEraTransition();
     setIsScanning(true);
     setAnomalyDetected(false);
   };
@@ -74,33 +93,38 @@ export function App() {
   };
 
   const handleCustomUpload = (_code: string, _name: string) => {
-    // Dynamically inject custom code and trigger scanner
+    sound.playEraTransition();
     setIsScanning(true);
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-purple-600 selection:text-white">
       
-      {/* 1. Global Header with Hackathon Tracks & Actions */}
+      {/* 1. Global Header with Hackathon Tracks & Sound Toggle */}
       <Header
         onOpenSpecs={() => setShowSpecsModal(true)}
         onOpenExport={() => setShowExportModal(true)}
         isAutoHealing={isHealing}
+        soundEnabled={soundEnabled}
+        onToggleSound={handleToggleSound}
       />
 
-      {/* 2. Preset Selector / Dead Tech Catalog */}
+      {/* 2. Interactive Historical Chronometer / Timeline Scrubber */}
+      <TimelineScrubber
+        activePresetId={activePresetId}
+        onSelectPreset={handleSelectPreset}
+      />
+
+      {/* 3. Preset Selector / Dead Tech Catalog */}
       <PresetSelector
         activePresetId={activePresetId}
-        onSelectPreset={(id) => {
-          setActivePresetId(id);
-          setAnomalyDetected(false);
-        }}
+        onSelectPreset={handleSelectPreset}
         onExorciseTrigger={handleExorciseTrigger}
         isScanning={isScanning}
         onCustomUpload={handleCustomUpload}
       />
 
-      {/* 3. Parity Sentinel Telemetry Bar */}
+      {/* 4. Parity Sentinel Telemetry Bar */}
       <ParitySentinel
         anomalyDetected={anomalyDetected}
         onInduceChaos={handleInduceChaos}
@@ -109,7 +133,7 @@ export function App() {
         speedup={activePresetId === 'vb6-finance' ? 34.4 : activePresetId === 'flash-orbit' ? 28.2 : 45.1}
       />
 
-      {/* 4. Main Dual-State Lockstep Viewport */}
+      {/* 5. Main Dual-State Lockstep Viewport */}
       <main className="flex-1 px-4 lg:px-8 py-6 max-w-7xl mx-auto w-full">
         
         {/* Viewport Subtitle / Lockstep Indicator */}
@@ -156,10 +180,13 @@ export function App() {
         </div>
       </main>
 
-      {/* 5. Code Dissection & AST Translation Diff */}
+      {/* 6. Live In-Browser Parity Test Suite Runner */}
+      <ParityTestRunner />
+
+      {/* 7. Code Dissection & AST Translation Diff */}
       <CodeComparator preset={activePreset} />
 
-      {/* 6. Footer */}
+      {/* 8. Footer */}
       <footer className="mt-auto border-t border-slate-900 bg-slate-950/90 py-6 px-4 text-center text-xs text-slate-500 font-mono">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">

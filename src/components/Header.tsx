@@ -1,13 +1,21 @@
 import React from 'react';
-import { Ghost, Sparkles, Download, FileCode } from 'lucide-react';
+import { Ghost, Sparkles, Download, FileCode, Volume2, VolumeX } from 'lucide-react';
 
 interface HeaderProps {
   onOpenSpecs: () => void;
   onOpenExport: () => void;
   isAutoHealing: boolean;
+  soundEnabled: boolean;
+  onToggleSound: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenSpecs, onOpenExport, isAutoHealing }) => {
+export const Header: React.FC<HeaderProps> = ({
+  onOpenSpecs,
+  onOpenExport,
+  isAutoHealing,
+  soundEnabled,
+  onToggleSound,
+}) => {
   return (
     <header className="border-b border-purple-900/40 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50 px-4 lg:px-8 py-3">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
@@ -57,6 +65,20 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpecs, onOpenExport, isAut
               <span>Kiro Auto-Healing Active...</span>
             </div>
           )}
+
+          {/* Sound Toggle */}
+          <button
+            onClick={onToggleSound}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono transition-colors border ${
+              soundEnabled
+                ? 'bg-purple-950/60 text-purple-300 border-purple-700/50'
+                : 'bg-slate-900 text-slate-500 border-slate-800'
+            }`}
+            title="Toggle Retro Synthesized Audio FX"
+          >
+            {soundEnabled ? <Volume2 className="w-3.5 h-3.5 text-purple-400" /> : <VolumeX className="w-3.5 h-3.5 text-slate-500" />}
+            <span className="hidden sm:inline">SFX: {soundEnabled ? 'ON' : 'OFF'}</span>
+          </button>
 
           <button
             onClick={onOpenSpecs}

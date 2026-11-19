@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShieldCheck, AlertOctagon, Wrench, Gauge, Activity } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { sound } from '../../core/sound';
 
 interface ParitySentinelProps {
   anomalyDetected: boolean;
@@ -18,11 +19,17 @@ export const ParitySentinel: React.FC<ParitySentinelProps> = ({
   speedup,
 }) => {
   const triggerConfetti = () => {
+    sound.playVictory();
     confetti({
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 }
     });
+  };
+
+  const handleChaosClick = () => {
+    sound.playAlarm();
+    onInduceChaos();
   };
 
   const handleHealClick = () => {
@@ -86,7 +93,7 @@ export const ParitySentinel: React.FC<ParitySentinelProps> = ({
         <div className="flex items-center gap-2 w-full md:w-auto justify-end">
           {!anomalyDetected ? (
             <button
-              onClick={onInduceChaos}
+              onClick={handleChaosClick}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-amber-300 bg-amber-950/40 hover:bg-amber-900/60 border border-amber-600/40 transition-colors shadow-sm"
               title="Simulate intentional drift/bug in modern code"
             >
