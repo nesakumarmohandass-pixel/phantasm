@@ -1,7 +1,6 @@
 import React from 'react';
 import { Header } from './components/Header';
-import { TimelineScrubber } from './components/TimelineScrubber';
-import { PresetSelector } from './components/PresetSelector';
+import { StudioToolbar } from './components/StudioToolbar';
 import { LegacyViewport } from './components/DualMirror/LegacyViewport';
 import { ModernViewport } from './components/DualMirror/ModernViewport';
 import { ParitySentinel } from './components/DualMirror/ParitySentinel';
@@ -13,7 +12,7 @@ import { ExportModal } from './components/ExportModal';
 import { PRESETS } from './core/presets';
 import { sound } from './core/sound';
 import type { PresetId, FinanceState, OrbitState, LogisticsState } from './types';
-import { ArrowLeftRight, Ghost } from 'lucide-react';
+import { CheckSquare, Code2, ArrowLeftRight } from 'lucide-react';
 
 export function App() {
   // Preset Selection State
@@ -21,6 +20,9 @@ export function App() {
   const [isScanning, setIsScanning] = React.useState<boolean>(false);
   const [showSpecsModal, setShowSpecsModal] = React.useState<boolean>(false);
   const [showExportModal, setShowExportModal] = React.useState<boolean>(false);
+
+  // Bottom Workspace Tabs: 'tests' | 'diff' | 'specs'
+  const [activeTab, setActiveTab] = React.useState<'tests' | 'diff'>('tests');
 
   // Parity Sentinel & Chaos State
   const [anomalyDetected, setAnomalyDetected] = React.useState<boolean>(false);
@@ -71,19 +73,16 @@ export function App() {
     setAnomalyDetected(false);
   };
 
-  // Trigger Spectral Scanner Decompilation Animation
-  const handleExorciseTrigger = () => {
+  const handleDecompile = () => {
     sound.playEraTransition();
     setIsScanning(true);
     setAnomalyDetected(false);
   };
 
-  // Induce Chaos (simulate a subtle migration bug)
   const handleInduceChaos = () => {
     setAnomalyDetected(true);
   };
 
-  // Auto-Heal (Simulate Kiro Agent Hook fixing the bug)
   const handleAutoHeal = () => {
     setIsHealing(true);
     setTimeout(() => {
@@ -98,9 +97,9 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-purple-600 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-zinc-950 text-zinc-100 selection:bg-purple-600 selection:text-white font-sans antialiased">
       
-      {/* 1. Global Header with Hackathon Tracks & Sound Toggle */}
+      {/* 1. Sleek Human-Grade Navigation */}
       <Header
         onOpenSpecs={() => setShowSpecsModal(true)}
         onOpenExport={() => setShowExportModal(true)}
@@ -109,22 +108,16 @@ export function App() {
         onToggleSound={handleToggleSound}
       />
 
-      {/* 2. Interactive Historical Chronometer / Timeline Scrubber */}
-      <TimelineScrubber
+      {/* 2. Linear-Style Studio Toolbar */}
+      <StudioToolbar
         activePresetId={activePresetId}
         onSelectPreset={handleSelectPreset}
-      />
-
-      {/* 3. Preset Selector / Dead Tech Catalog */}
-      <PresetSelector
-        activePresetId={activePresetId}
-        onSelectPreset={handleSelectPreset}
-        onExorciseTrigger={handleExorciseTrigger}
+        onDecompile={handleDecompile}
         isScanning={isScanning}
         onCustomUpload={handleCustomUpload}
       />
 
-      {/* 4. Parity Sentinel Telemetry Bar */}
+      {/* 3. Invariance Sentinel Telemetry Bar */}
       <ParitySentinel
         anomalyDetected={anomalyDetected}
         onInduceChaos={handleInduceChaos}
@@ -133,26 +126,29 @@ export function App() {
         speedup={activePresetId === 'vb6-finance' ? 34.4 : activePresetId === 'flash-orbit' ? 28.2 : 45.1}
       />
 
-      {/* 5. Main Dual-State Lockstep Viewport */}
-      <main className="flex-1 px-4 lg:px-8 py-6 max-w-7xl mx-auto w-full">
+      {/* 4. Main Dual-State Workstation Viewport */}
+      <main className="flex-1 px-4 lg:px-6 py-5 max-w-7xl mx-auto w-full">
         
-        {/* Viewport Subtitle / Lockstep Indicator */}
-        <div className="flex items-center justify-between mb-4">
+        {/* Workspace Title Bar */}
+        <div className="flex items-center justify-between mb-3 text-xs">
           <div className="flex items-center gap-2">
-            <ArrowLeftRight className="w-4 h-4 text-purple-400 animate-pulse" />
-            <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300 font-mono m-0">
-              Dual-State Lockstep Mirror: {activePreset.name}
-            </h2>
+            <ArrowLeftRight className="w-3.5 h-3.5 text-zinc-400" />
+            <span className="font-semibold text-zinc-200">
+              {activePreset.name} ({activePreset.year})
+            </span>
+            <span className="text-zinc-500 font-mono text-[11px] hidden sm:inline">
+              — Sub-5ms Synchronous Memory Bridge
+            </span>
           </div>
-          <span className="text-xs text-slate-400 font-mono hidden sm:inline">
-            Sub-5ms Event Mirror Active | Input in either era updates both in lockstep
-          </span>
+
+          <div className="text-[11px] text-zinc-500 font-mono">
+            Inputs in either runtime propagate bidirectionally
+          </div>
         </div>
 
-        {/* Dual Split Screen Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-[520px]">
-          
-          {/* Left: The Past (Legacy Emulated Viewport) */}
+        {/* Dual Split Screen */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 min-h-[480px]">
+          {/* Left: The Past */}
           <LegacyViewport
             presetId={activePresetId}
             financeState={financeState}
@@ -165,7 +161,7 @@ export function App() {
             onToggleCrt={() => setIsCrtEnabled(!isCrtEnabled)}
           />
 
-          {/* Right: The Future (2026 Modern Viewport) */}
+          {/* Right: The Future */}
           <ModernViewport
             presetId={activePresetId}
             financeState={financeState}
@@ -176,31 +172,51 @@ export function App() {
             onLogisticsChange={setLogisticsState}
             anomalyDetected={anomalyDetected}
           />
-
         </div>
+
+        {/* 5. Clean Workstation Tabs: Verification & Source Diff */}
+        <div className="mt-8">
+          <div className="flex items-center gap-2 border-b border-zinc-800 pb-px mb-4">
+            <button
+              onClick={() => setActiveTab('tests')}
+              className={`flex items-center gap-2 px-3 py-2 text-xs font-medium border-b-2 transition-all ${
+                activeTab === 'tests'
+                  ? 'border-purple-500 text-zinc-100 font-semibold'
+                  : 'border-transparent text-zinc-500 hover:text-zinc-300'
+              }`}
+            >
+              <CheckSquare className="w-3.5 h-3.5 text-emerald-400" />
+              <span>In-Browser Test Vectors</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('diff')}
+              className={`flex items-center gap-2 px-3 py-2 text-xs font-medium border-b-2 transition-all ${
+                activeTab === 'diff'
+                  ? 'border-purple-500 text-zinc-100 font-semibold'
+                  : 'border-transparent text-zinc-500 hover:text-zinc-300'
+              }`}
+            >
+              <Code2 className="w-3.5 h-3.5 text-zinc-400" />
+              <span>AST Source Code Diff</span>
+            </button>
+          </div>
+
+          {activeTab === 'tests' && <ParityTestRunner />}
+          {activeTab === 'diff' && <CodeComparator preset={activePreset} />}
+        </div>
+
       </main>
 
-      {/* 6. Live In-Browser Parity Test Suite Runner */}
-      <ParityTestRunner />
-
-      {/* 7. Code Dissection & AST Translation Diff */}
-      <CodeComparator preset={activePreset} />
-
-      {/* 8. Footer */}
-      <footer className="mt-auto border-t border-slate-900 bg-slate-950/90 py-6 px-4 text-center text-xs text-slate-500 font-mono">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <Ghost className="w-4 h-4 text-purple-400" />
-            <span className="text-slate-400 font-bold">PHANTASM</span>
-            <span>— Built for the Kiroween Devpost Hackathon 2026</span>
-          </div>
-          <div className="flex items-center gap-4 text-[11px]">
-            <span>Spec-Driven Engineering</span>
-            <span>•</span>
-            <span>Zero-Divergence Telemetry</span>
-            <span>•</span>
-            <span className="text-purple-400">Powered by Kiro AI</span>
-          </div>
+      {/* Footer */}
+      <footer className="mt-auto border-t border-zinc-900 bg-zinc-950 px-6 py-4 text-xs text-zinc-600 font-mono flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div>
+          PHANTASM — Built for the Kiroween Devpost Challenge
+        </div>
+        <div className="flex items-center gap-3 text-zinc-500">
+          <span>Spec-Driven Modernization</span>
+          <span>•</span>
+          <span>Zero-Divergence Telemetry</span>
         </div>
       </footer>
 

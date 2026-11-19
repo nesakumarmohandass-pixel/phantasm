@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileCode, X, Check } from 'lucide-react';
+import { FileText, X, Check } from 'lucide-react';
 
 interface SpecsModalProps {
   onClose: () => void;
@@ -10,55 +10,55 @@ export const SpecsModal: React.FC<SpecsModalProps> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in">
-      <div className="max-w-3xl w-full bg-slate-900 border border-purple-500/40 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+      <div className="max-w-3xl w-full bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950">
-          <div className="flex items-center gap-2.5">
-            <FileCode className="w-5 h-5 text-purple-400" />
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-800 bg-zinc-950">
+          <div className="flex items-center gap-2">
+            <FileText className="w-4 h-4 text-purple-400" />
             <div>
-              <h3 className="text-base font-bold text-white m-0">Kiro Spec & Steering Artifacts</h3>
-              <p className="text-xs text-slate-400 m-0">
+              <h3 className="text-sm font-semibold text-zinc-100 m-0">Kiro Specification & Invariance Rules</h3>
+              <p className="text-[11px] text-zinc-500 m-0">
                 Core governance documents embedded in the local repository
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
+            className="text-zinc-500 hover:text-zinc-300 p-1 rounded-md hover:bg-zinc-800 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-slate-800 bg-slate-950/60 px-6 gap-2 pt-2">
+        <div className="flex border-b border-zinc-800 bg-zinc-950/60 px-5 gap-2 pt-2">
           <button
             onClick={() => setActiveTab('specs')}
-            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg border-b-2 transition-all ${
+            className={`px-3 py-1.5 text-xs font-mono font-medium rounded-t-md border-b-2 transition-all ${
               activeTab === 'specs'
-                ? 'border-purple-500 text-purple-300 bg-slate-900'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
+                ? 'border-purple-500 text-zinc-100 bg-zinc-900'
+                : 'border-transparent text-zinc-500 hover:text-zinc-300'
             }`}
           >
             .kiro/specs/core-engine.spec.md
           </button>
           <button
             onClick={() => setActiveTab('steering')}
-            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg border-b-2 transition-all ${
+            className={`px-3 py-1.5 text-xs font-mono font-medium rounded-t-md border-b-2 transition-all ${
               activeTab === 'steering'
-                ? 'border-purple-500 text-purple-300 bg-slate-900'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
+                ? 'border-purple-500 text-zinc-100 bg-zinc-900'
+                : 'border-transparent text-zinc-500 hover:text-zinc-300'
             }`}
           >
             .kiro/steering/system-rules.md
           </button>
           <button
             onClick={() => setActiveTab('hooks')}
-            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg border-b-2 transition-all ${
+            className={`px-3 py-1.5 text-xs font-mono font-medium rounded-t-md border-b-2 transition-all ${
               activeTab === 'hooks'
-                ? 'border-purple-500 text-purple-300 bg-slate-900'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
+                ? 'border-purple-500 text-zinc-100 bg-zinc-900'
+                : 'border-transparent text-zinc-500 hover:text-zinc-300'
             }`}
           >
             .kiro/hooks/on-drift-detected.json
@@ -66,7 +66,7 @@ export const SpecsModal: React.FC<SpecsModalProps> = ({ onClose }) => {
         </div>
 
         {/* Content Viewer */}
-        <div className="p-6 overflow-y-auto font-mono text-xs text-slate-300 bg-slate-950/90 leading-relaxed flex-1">
+        <div className="p-5 overflow-y-auto font-mono text-xs text-zinc-300 bg-zinc-950 leading-relaxed flex-1 select-text">
           {activeTab === 'specs' && (
             <pre className="whitespace-pre-wrap">
 {`# Spec: PHANTASM Core Engine & Synchronization Bus
@@ -96,7 +96,7 @@ reactive 2026 web applications while maintaining mathematical and state parity.
 
 ### 2. Engineering Standards
 - Framework: React 19 + TypeScript (Strict Type Safety).
-- Styling: Tailwind CSS + CRT/Win98 Shaders.
+- Styling: Authentic Win98/CRT Shaders + Modern Zinc Dark Theme.
 - State Engine: Observable lockstep bridge syncing legacy and modern inputs.`}
             </pre>
           )}
@@ -122,14 +122,14 @@ reactive 2026 web applications while maintaining mathematical and state parity.
           )}
         </div>
 
-        <div className="px-6 py-3 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-xs text-slate-400">
-          <div className="flex items-center gap-1.5 text-emerald-400">
-            <Check className="w-4 h-4" />
-            <span>Kiro Compliance Check: 100% Validated</span>
+        <div className="px-5 py-3 border-t border-zinc-800 bg-zinc-950 flex items-center justify-between text-xs text-zinc-500">
+          <div className="flex items-center gap-1.5 text-emerald-400 font-medium">
+            <Check className="w-3.5 h-3.5" />
+            <span>Kiro Governance Validated</span>
           </div>
           <button
             onClick={onClose}
-            className="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium transition-colors"
+            className="px-3 py-1.5 rounded-md bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium transition-colors"
           >
             Close
           </button>

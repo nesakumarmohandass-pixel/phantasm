@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, AlertOctagon, Wrench, Gauge, Activity } from 'lucide-react';
+import { ShieldCheck, AlertTriangle, Wrench, Activity } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { sound } from '../../core/sound';
 
@@ -21,8 +21,8 @@ export const ParitySentinel: React.FC<ParitySentinelProps> = ({
   const triggerConfetti = () => {
     sound.playVictory();
     confetti({
-      particleCount: 100,
-      spread: 70,
+      particleCount: 80,
+      spread: 60,
       origin: { y: 0.6 }
     });
   };
@@ -34,90 +34,74 @@ export const ParitySentinel: React.FC<ParitySentinelProps> = ({
 
   const handleHealClick = () => {
     onAutoHeal();
-    setTimeout(triggerConfetti, 1000);
+    setTimeout(triggerConfetti, 900);
   };
 
   return (
-    <section className="px-4 lg:px-8 py-3 bg-slate-950/90 border-y border-slate-800">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        
-        {/* Left: Telemetry Indicators */}
-        <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
-          <div className="flex items-center gap-2">
-            <Activity className="w-4 h-4 text-purple-400" />
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Parity Sentinel:
-            </span>
-          </div>
-
-          {/* State Parity Metric */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800">
-            <span className="text-[11px] text-slate-400">State Parity:</span>
-            <span
-              className={`font-mono text-xs font-bold ${
-                anomalyDetected ? 'text-red-400 animate-pulse' : 'text-emerald-400'
-              }`}
-            >
-              {anomalyDetected ? '91.50%' : '100.00%'}
-            </span>
-            {anomalyDetected ? (
-              <AlertOctagon className="w-3.5 h-3.5 text-red-400" />
-            ) : (
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            )}
-          </div>
-
-          {/* Mathematical Drift */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800">
-            <span className="text-[11px] text-slate-400">Calculated Drift:</span>
-            <span
-              className={`font-mono text-xs font-bold ${
-                anomalyDetected ? 'text-red-400 font-extrabold' : 'text-slate-200'
-              }`}
-            >
-              {anomalyDetected ? '+8.5000% [FAIL]' : '0.000000 [EXACT]'}
-            </span>
-          </div>
-
-          {/* Execution Latency & Speedup */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800">
-            <Gauge className="w-3.5 h-3.5 text-sky-400" />
-            <span className="text-[11px] text-slate-400">Execution Speedup:</span>
-            <span className="font-mono text-xs font-bold text-sky-400">
-              {speedup}x Native V8
-            </span>
-          </div>
+    <div className="border-b border-zinc-800/80 bg-zinc-950 px-4 lg:px-6 py-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-mono">
+      
+      {/* Left: Precise Telemetry Metrics */}
+      <div className="flex flex-wrap items-center gap-4 text-zinc-400">
+        <div className="flex items-center gap-1.5 text-zinc-500 font-sans font-medium text-[11px] uppercase tracking-wider">
+          <Activity className="w-3.5 h-3.5 text-zinc-400" />
+          <span>Invariance Sentinel</span>
         </div>
 
-        {/* Right: Chaos & Auto-Heal Actions */}
-        <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-          {!anomalyDetected ? (
-            <button
-              onClick={handleChaosClick}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-amber-300 bg-amber-950/40 hover:bg-amber-900/60 border border-amber-600/40 transition-colors shadow-sm"
-              title="Simulate intentional drift/bug in modern code"
-            >
-              <AlertOctagon className="w-3.5 h-3.5 text-amber-400" />
-              <span>Induce Chaos / Bug Drift</span>
-            </button>
+        {/* State Parity */}
+        <div className="flex items-center gap-1.5">
+          <span className="text-zinc-500 text-[11px]">Parity:</span>
+          <span className={`font-semibold tabular-nums ${anomalyDetected ? 'text-red-400 font-bold' : 'text-emerald-400'}`}>
+            {anomalyDetected ? '91.50%' : '100.00%'}
+          </span>
+          {anomalyDetected ? (
+            <AlertTriangle className="w-3 h-3 text-red-400" />
           ) : (
-            <button
-              onClick={handleHealClick}
-              disabled={isHealing}
-              className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-bold text-white transition-all shadow-lg ${
-                isHealing
-                  ? 'bg-emerald-800 cursor-wait'
-                  : 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-700/40 active:scale-95 animate-bounce'
-              }`}
-              title="Trigger Kiro Agent Hook (.kiro/hooks/on-drift-detected.json)"
-            >
-              <Wrench className={`w-3.5 h-3.5 ${isHealing ? 'animate-spin' : ''}`} />
-              <span>{isHealing ? 'Synthesizing Patch...' : 'Invoke Kiro Auto-Heal Hook'}</span>
-            </button>
+            <ShieldCheck className="w-3 h-3 text-emerald-400" />
           )}
         </div>
 
+        {/* Drift */}
+        <div className="flex items-center gap-1.5">
+          <span className="text-zinc-500 text-[11px]">Drift:</span>
+          <span className={`tabular-nums ${anomalyDetected ? 'text-red-400 font-semibold' : 'text-zinc-300'}`}>
+            {anomalyDetected ? '+8.5000% [DIVERGENCE]' : '0.000000 Δ'}
+          </span>
+        </div>
+
+        {/* Speedup */}
+        <div className="hidden md:flex items-center gap-1.5 text-zinc-400">
+          <span className="text-zinc-500 text-[11px]">Speedup:</span>
+          <span className="text-zinc-200 tabular-nums">{speedup}x V8 Native</span>
+        </div>
       </div>
-    </section>
+
+      {/* Right: Chaos & Auto-Heal Actions */}
+      <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+        {!anomalyDetected ? (
+          <button
+            onClick={handleChaosClick}
+            className="flex items-center gap-1 px-2.5 py-1 rounded text-[11px] text-zinc-400 hover:text-zinc-200 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 transition-colors"
+            title="Inject an artificial floating-point rounding divergence"
+          >
+            <AlertTriangle className="w-3 h-3 text-zinc-500" />
+            <span>Simulate Drift Bug</span>
+          </button>
+        ) : (
+          <button
+            onClick={handleHealClick}
+            disabled={isHealing}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded text-[11px] font-sans font-medium text-white transition-all shadow-sm ${
+              isHealing
+                ? 'bg-emerald-900 cursor-wait'
+                : 'bg-emerald-600 hover:bg-emerald-500 active:scale-95'
+            }`}
+          >
+            <Wrench className={`w-3 h-3 ${isHealing ? 'animate-spin' : ''}`} />
+            <span>{isHealing ? 'Synthesizing Patch...' : 'Apply Kiro Auto-Patch'}</span>
+          </button>
+        )}
+      </div>
+
+    </div>
   );
 };

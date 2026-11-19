@@ -1,6 +1,6 @@
 import React from 'react';
 import type { PresetId, FinanceState, OrbitState, LogisticsState } from '../../types';
-import { TrendingUp, Zap, BarChart3, Atom } from 'lucide-react';
+import { TrendingUp, BarChart3, Atom } from 'lucide-react';
 import { calculateRiskSurplus } from '../../core/calculations';
 
 interface ModernViewportProps {
@@ -24,7 +24,6 @@ export const ModernViewport: React.FC<ModernViewportProps> = ({
   onLogisticsChange,
   anomalyDetected,
 }) => {
-  // Modern calculations
   const financeResult = React.useMemo(() => {
     return calculateRiskSurplus(
       financeState.principal,
@@ -34,59 +33,57 @@ export const ModernViewport: React.FC<ModernViewportProps> = ({
     );
   }, [financeState]);
 
-  // If anomaly is induced, perturb the calculation slightly to show drift detection
   const displaySurplus = anomalyDetected
     ? financeResult.riskAdjustedSurplus * 1.085 // 8.5% drift
     : financeResult.riskAdjustedSurplus;
 
   return (
-    <div className="flex flex-col h-full bg-slate-900/90 rounded-2xl border border-purple-900/50 overflow-hidden shadow-xl shadow-purple-950/20">
+    <div className="flex flex-col h-full bg-zinc-950 rounded-xl border border-zinc-800/90 overflow-hidden shadow-sm">
       
-      {/* Top Era Banner */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-slate-950 border-b border-purple-900/40 text-xs">
+      {/* Top Bar */}
+      <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-900/50 border-b border-zinc-800 text-xs">
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-mono font-bold text-emerald-400 uppercase tracking-wider">
-            Future (Reincarnated 2026 Engine)
+          <span className="w-2 h-2 rounded-full bg-emerald-500" />
+          <span className="font-medium text-zinc-200">
+            Reincarnated Runtime (2026 Target)
           </span>
         </div>
-        <div className="flex items-center gap-1.5 text-[11px] font-mono text-purple-300">
-          <Zap className="w-3.5 h-3.5 text-purple-400" />
-          <span>React 19 + TypeScript + WASM</span>
-        </div>
+        <span className="text-[11px] font-mono text-zinc-500">
+          React 19 + TypeScript Strict + WASM
+        </span>
       </div>
 
       {/* Main Content Area */}
-      <div className="p-4 flex-1 flex flex-col justify-center items-center overflow-auto">
+      <div className="p-5 flex-1 flex flex-col justify-center overflow-auto">
         
         {/* ========================================================= */}
-        {/* PRESET 1: MODERN 2026 CAPITAL RISK WORKSTATION            */}
+        {/* PRESET 1: MODERN CAPITAL RISK WORKSTATION                 */}
         {/* ========================================================= */}
         {presetId === 'vb6-finance' && (
-          <div className="w-full max-w-lg glass-panel-glow rounded-2xl p-5 border border-purple-500/30 text-white space-y-4">
+          <div className="w-full space-y-4">
             
-            {/* Header */}
+            {/* Header / Subtitle */}
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2 m-0">
+                <h3 className="text-sm font-semibold text-zinc-100 flex items-center gap-1.5 m-0">
                   <TrendingUp className="w-4 h-4 text-emerald-400" />
-                  <span>Aegis Wealth & Parametric VaR</span>
+                  <span>Aegis Portfolio Risk Engine</span>
                 </h3>
-                <p className="text-[11px] text-slate-400 m-0">
-                  Float64 Precision Engine | Real-Time Horizon Curve
+                <p className="text-xs text-zinc-500 m-0">
+                  Float64 Precision Model with Parametric 95% VaR
                 </p>
               </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
-                1:1 Parity Verified
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-900 text-zinc-400 border border-zinc-800">
+                Quarterly Compounding
               </span>
             </div>
 
-            {/* Interactive Sliders (Bidirectional bridge) */}
+            {/* Interactive Sliders */}
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800">
-                <div className="flex justify-between text-[11px] text-slate-300 mb-1">
+              <div className="bg-zinc-900/60 p-3 rounded-lg border border-zinc-800/80">
+                <div className="flex justify-between text-zinc-400 mb-1.5 text-[11px]">
                   <span>Principal</span>
-                  <span className="font-mono text-purple-300 font-bold">
+                  <span className="font-mono text-zinc-100 font-semibold tabular-nums">
                     ${financeState.principal.toLocaleString()}
                   </span>
                 </div>
@@ -99,14 +96,14 @@ export const ModernViewport: React.FC<ModernViewportProps> = ({
                   onChange={(e) =>
                     onFinanceChange({ ...financeState, principal: Number(e.target.value) })
                   }
-                  className="w-full accent-purple-500 cursor-pointer"
+                  className="w-full accent-zinc-200 cursor-pointer h-1.5 bg-zinc-800 rounded-lg"
                 />
               </div>
 
-              <div className="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800">
-                <div className="flex justify-between text-[11px] text-slate-300 mb-1">
+              <div className="bg-zinc-900/60 p-3 rounded-lg border border-zinc-800/80">
+                <div className="flex justify-between text-zinc-400 mb-1.5 text-[11px]">
                   <span>Annual Yield Rate</span>
-                  <span className="font-mono text-emerald-400 font-bold">
+                  <span className="font-mono text-emerald-400 font-semibold tabular-nums">
                     {financeState.interestRate}%
                   </span>
                 </div>
@@ -119,14 +116,14 @@ export const ModernViewport: React.FC<ModernViewportProps> = ({
                   onChange={(e) =>
                     onFinanceChange({ ...financeState, interestRate: Number(e.target.value) })
                   }
-                  className="w-full accent-emerald-500 cursor-pointer"
+                  className="w-full accent-emerald-500 cursor-pointer h-1.5 bg-zinc-800 rounded-lg"
                 />
               </div>
 
-              <div className="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800">
-                <div className="flex justify-between text-[11px] text-slate-300 mb-1">
-                  <span>Horizon</span>
-                  <span className="font-mono text-sky-400 font-bold">
+              <div className="bg-zinc-900/60 p-3 rounded-lg border border-zinc-800/80">
+                <div className="flex justify-between text-zinc-400 mb-1.5 text-[11px]">
+                  <span>Holding Horizon</span>
+                  <span className="font-mono text-zinc-100 font-semibold tabular-nums">
                     {financeState.years} Years
                   </span>
                 </div>
@@ -139,14 +136,14 @@ export const ModernViewport: React.FC<ModernViewportProps> = ({
                   onChange={(e) =>
                     onFinanceChange({ ...financeState, years: Number(e.target.value) })
                   }
-                  className="w-full accent-sky-500 cursor-pointer"
+                  className="w-full accent-zinc-200 cursor-pointer h-1.5 bg-zinc-800 rounded-lg"
                 />
               </div>
 
-              <div className="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800">
-                <div className="flex justify-between text-[11px] text-slate-300 mb-1">
+              <div className="bg-zinc-900/60 p-3 rounded-lg border border-zinc-800/80">
+                <div className="flex justify-between text-zinc-400 mb-1.5 text-[11px]">
                   <span>Volatility Index (σ)</span>
-                  <span className="font-mono text-amber-400 font-bold">
+                  <span className="font-mono text-amber-400 font-semibold tabular-nums">
                     {financeState.volatility}%
                   </span>
                 </div>
@@ -159,72 +156,78 @@ export const ModernViewport: React.FC<ModernViewportProps> = ({
                   onChange={(e) =>
                     onFinanceChange({ ...financeState, volatility: Number(e.target.value) })
                   }
-                  className="w-full accent-amber-500 cursor-pointer"
+                  className="w-full accent-amber-500 cursor-pointer h-1.5 bg-zinc-800 rounded-lg"
                 />
               </div>
             </div>
 
-            {/* Dynamic SVG Growth Projection Curve */}
-            <div className="bg-slate-950/80 p-3 rounded-xl border border-slate-800">
-              <div className="flex items-center justify-between text-[11px] text-slate-400 mb-2">
-                <span>Multi-Year Capital Trajectory</span>
-                <span className="font-mono text-emerald-400">Quarterly Accrual</span>
+            {/* Dynamic Growth Projection Curve */}
+            <div className="bg-zinc-900/40 p-3 rounded-lg border border-zinc-800/80">
+              <div className="flex items-center justify-between text-[11px] text-zinc-400 mb-1">
+                <span>Multi-Year Capital Growth Trajectory</span>
+                <span className="font-mono text-emerald-400 text-[10px]">60 FPS Reactive</span>
               </div>
-              <svg viewBox="0 0 300 70" className="w-full h-16 overflow-visible">
+              <svg viewBox="0 0 300 60" className="w-full h-14 overflow-visible">
                 <defs>
                   <linearGradient id="curveGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#a855f7" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#a855f7" stopOpacity="0.0" />
+                    <stop offset="0%" stopColor="#10b981" stopOpacity="0.25" />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
                   </linearGradient>
                 </defs>
                 <path
-                  d={`M 0,60 Q 150,${Math.max(10, 60 - (financeState.interestRate * 2.2))} 300,${Math.max(5, 55 - (financeState.interestRate * 2.8))}`}
+                  d={`M 0,55 Q 150,${Math.max(10, 55 - (financeState.interestRate * 2.1))} 300,${Math.max(5, 50 - (financeState.interestRate * 2.6))} L 300,60 L 0,60 Z`}
+                  fill="url(#curveGradient)"
+                />
+                <path
+                  d={`M 0,55 Q 150,${Math.max(10, 55 - (financeState.interestRate * 2.1))} 300,${Math.max(5, 50 - (financeState.interestRate * 2.6))}`}
                   fill="none"
-                  stroke="#c084fc"
-                  strokeWidth="2.5"
+                  stroke="#10b981"
+                  strokeWidth="2"
                 />
                 <circle
                   cx="300"
-                  cy={Math.max(5, 55 - (financeState.interestRate * 2.8))}
-                  r="4"
-                  fill="#38bdf8"
+                  cy={Math.max(5, 50 - (financeState.interestRate * 2.6))}
+                  r="3.5"
+                  fill="#ffffff"
+                  stroke="#10b981"
+                  strokeWidth="2"
                 />
               </svg>
             </div>
 
             {/* Real-Time Modern KPI Cards */}
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">Projected Total Balance:</span>
-                <span className="font-mono font-bold text-base text-white">
+            <div className="grid grid-cols-2 gap-2.5 text-xs">
+              <div className="bg-zinc-900/80 p-3 rounded-lg border border-zinc-800">
+                <span className="text-[11px] text-zinc-500 block mb-0.5">Projected Gross Balance</span>
+                <span className="font-mono font-bold text-base text-zinc-100 tabular-nums">
                   ${Math.round(financeResult.compoundedTotal).toLocaleString()}
                 </span>
               </div>
-              <div className="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">Gross Yield (G):</span>
-                <span className="font-mono font-bold text-base text-emerald-400">
+              <div className="bg-zinc-900/80 p-3 rounded-lg border border-zinc-800">
+                <span className="text-[11px] text-zinc-500 block mb-0.5">Gross Yield Accrual</span>
+                <span className="font-mono font-bold text-base text-emerald-400 tabular-nums">
                   +${Math.round(financeResult.grossYield).toLocaleString()}
                 </span>
               </div>
-              <div className="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">Parametric VaR 95%:</span>
-                <span className="font-mono font-bold text-base text-red-400">
+              <div className="bg-zinc-900/80 p-3 rounded-lg border border-zinc-800">
+                <span className="text-[11px] text-zinc-500 block mb-0.5">Parametric VaR (95%)</span>
+                <span className="font-mono font-bold text-base text-red-400 tabular-nums">
                   -${Math.round(financeResult.valueAtRisk95).toLocaleString()}
                 </span>
               </div>
               <div
-                className={`p-2.5 rounded-xl border transition-colors ${
+                className={`p-3 rounded-lg border transition-all ${
                   anomalyDetected
-                    ? 'bg-red-950/50 border-red-500/80 animate-pulse'
-                    : 'bg-purple-950/40 border-purple-700/50'
+                    ? 'bg-red-950/40 border-red-500/60'
+                    : 'bg-zinc-900/80 border-zinc-800'
                 }`}
               >
-                <span className="text-[10px] text-slate-300 block">
-                  {anomalyDetected ? '⚠️ DRIFT DETECTED:' : 'Risk-Adjusted Surplus:'}
+                <span className={`text-[11px] block mb-0.5 ${anomalyDetected ? 'text-red-400 font-semibold' : 'text-zinc-500'}`}>
+                  {anomalyDetected ? '⚠️ DRIFT DETECTED' : 'Risk-Adjusted Surplus'}
                 </span>
                 <span
-                  className={`font-mono font-bold text-base ${
-                    anomalyDetected ? 'text-red-300' : 'text-purple-300'
+                  className={`font-mono font-bold text-base tabular-nums ${
+                    anomalyDetected ? 'text-red-400' : 'text-purple-300'
                   }`}
                 >
                   ${Math.round(displaySurplus).toLocaleString()}
@@ -239,25 +242,28 @@ export const ModernViewport: React.FC<ModernViewportProps> = ({
         {/* PRESET 2: MODERN ASTROPHYSICS LABORATORY (FLASH MODERN)   */}
         {/* ========================================================= */}
         {presetId === 'flash-orbit' && (
-          <div className="w-full max-w-lg glass-panel-glow rounded-2xl p-5 border border-purple-500/30 text-white space-y-4">
+          <div className="w-full space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2 m-0">
+                <h3 className="text-sm font-semibold text-zinc-100 flex items-center gap-1.5 m-0">
                   <Atom className="w-4 h-4 text-cyan-400" />
-                  <span>Graviton Keplerian Quantum Field</span>
+                  <span>Keplerian Gravity Field</span>
                 </h3>
-                <p className="text-[11px] text-slate-400 m-0">
-                  Symplectic Numerical Integrator | Conservation of Energy
+                <p className="text-xs text-zinc-500 m-0">
+                  Symplectic Numerical Integrator with Energy Conservation
                 </p>
               </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
-                WebGL 2.0 / 60 FPS
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-900 text-cyan-400 border border-zinc-800">
+                60 FPS Native
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block mb-1">Central Star Mass (M☉):</span>
+              <div className="bg-zinc-900/60 p-3 rounded-lg border border-zinc-800">
+                <div className="flex justify-between text-zinc-400 mb-1.5 text-[11px]">
+                  <span>Central Star Mass</span>
+                  <span className="font-mono text-amber-400 font-semibold tabular-nums">{orbitState.starMass} M☉</span>
+                </div>
                 <input
                   type="range"
                   min="200"
@@ -265,14 +271,14 @@ export const ModernViewport: React.FC<ModernViewportProps> = ({
                   step="50"
                   value={orbitState.starMass}
                   onChange={(e) => onOrbitChange({ ...orbitState, starMass: Number(e.target.value) })}
-                  className="w-full accent-amber-500 cursor-pointer"
+                  className="w-full accent-amber-500 cursor-pointer h-1.5 bg-zinc-800 rounded-lg"
                 />
-                <span className="font-mono font-bold text-sm text-amber-400 mt-1 block">
-                  {orbitState.starMass} M☉
-                </span>
               </div>
-              <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block mb-1">Orbital Radius (AU):</span>
+              <div className="bg-zinc-900/60 p-3 rounded-lg border border-zinc-800">
+                <div className="flex justify-between text-zinc-400 mb-1.5 text-[11px]">
+                  <span>Orbital Radius</span>
+                  <span className="font-mono text-cyan-400 font-semibold tabular-nums">{orbitState.orbitalRadius} AU</span>
+                </div>
                 <input
                   type="range"
                   min="30"
@@ -280,37 +286,34 @@ export const ModernViewport: React.FC<ModernViewportProps> = ({
                   step="1"
                   value={orbitState.orbitalRadius}
                   onChange={(e) => onOrbitChange({ ...orbitState, orbitalRadius: Number(e.target.value) })}
-                  className="w-full accent-cyan-400 cursor-pointer"
+                  className="w-full accent-cyan-400 cursor-pointer h-1.5 bg-zinc-800 rounded-lg"
                 />
-                <span className="font-mono font-bold text-sm text-cyan-400 mt-1 block">
-                  {orbitState.orbitalRadius} AU
-                </span>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">Orbital Period (T):</span>
-                <span className="font-mono font-bold text-lg text-amber-400">
+            <div className="grid grid-cols-2 gap-2.5 text-xs">
+              <div className="bg-zinc-900/80 p-3 rounded-lg border border-zinc-800">
+                <span className="text-[11px] text-zinc-500 block mb-0.5">Orbital Period (T)</span>
+                <span className="font-mono font-bold text-base text-zinc-100 tabular-nums">
                   {(Math.sqrt(Math.pow(orbitState.orbitalRadius, 3) / orbitState.starMass) * 4.2).toFixed(1)} Days
                 </span>
               </div>
-              <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">Escape Velocity:</span>
-                <span className="font-mono font-bold text-lg text-cyan-400">
+              <div className="bg-zinc-900/80 p-3 rounded-lg border border-zinc-800">
+                <span className="text-[11px] text-zinc-500 block mb-0.5">Escape Velocity</span>
+                <span className="font-mono font-bold text-base text-cyan-400 tabular-nums">
                   {(Math.sqrt((2 * orbitState.starMass) / orbitState.orbitalRadius) * 3.4).toFixed(2)} km/s
                 </span>
               </div>
             </div>
 
-            <div className="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-xs font-mono space-y-1">
-              <div className="flex justify-between text-slate-400">
-                <span>Total Mechanical Energy:</span>
-                <span className="text-emerald-400 font-bold">-482.14 J (Bound Stable)</span>
+            <div className="p-3 bg-zinc-900/40 rounded-lg border border-zinc-800 text-xs font-mono space-y-1 text-zinc-400">
+              <div className="flex justify-between">
+                <span>Mechanical Energy:</span>
+                <span className="text-emerald-400 font-medium">-482.14 J (Stable Orbit)</span>
               </div>
-              <div className="flex justify-between text-slate-400">
-                <span>Computational Speedup:</span>
-                <span className="text-purple-400 font-bold">28.4x over NPAPI</span>
+              <div className="flex justify-between">
+                <span>Speedup over NPAPI Flash:</span>
+                <span className="text-zinc-200 font-medium">28.4x Native Execution</span>
               </div>
             </div>
           </div>
@@ -320,25 +323,28 @@ export const ModernViewport: React.FC<ModernViewportProps> = ({
         {/* PRESET 3: MODERN SUPPLY CHAIN INTELLIGENCE (PASCAL MODERN) */}
         {/* ========================================================= */}
         {presetId === 'pascal-logistics' && (
-          <div className="w-full max-w-lg glass-panel-glow rounded-2xl p-5 border border-purple-500/30 text-white space-y-4">
+          <div className="w-full space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2 m-0">
+                <h3 className="text-sm font-semibold text-zinc-100 flex items-center gap-1.5 m-0">
                   <BarChart3 className="w-4 h-4 text-emerald-400" />
-                  <span>Logix Enterprise Logistics Hub</span>
+                  <span>Logistics Optimization Hub</span>
                 </h3>
-                <p className="text-[11px] text-slate-400 m-0">
-                  Dynamic Inventory Optimization & Stockout Risk Analysis
+                <p className="text-xs text-zinc-500 m-0">
+                  Dynamic Inventory Operations & Economic Order Model
                 </p>
               </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
-                Autonomous ROP
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-900 text-emerald-400 border border-zinc-800">
+                ISO-9001 Compliant
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block mb-1">Daily Demand:</span>
+              <div className="bg-zinc-900/60 p-3 rounded-lg border border-zinc-800">
+                <div className="flex justify-between text-zinc-400 mb-1.5 text-[11px]">
+                  <span>Daily Demand</span>
+                  <span className="font-mono text-emerald-400 font-semibold tabular-nums">{logisticsState.dailyDemand} Units/Day</span>
+                </div>
                 <input
                   type="range"
                   min="20"
@@ -346,14 +352,14 @@ export const ModernViewport: React.FC<ModernViewportProps> = ({
                   step="10"
                   value={logisticsState.dailyDemand}
                   onChange={(e) => onLogisticsChange({ ...logisticsState, dailyDemand: Number(e.target.value) })}
-                  className="w-full accent-emerald-500 cursor-pointer"
+                  className="w-full accent-emerald-500 cursor-pointer h-1.5 bg-zinc-800 rounded-lg"
                 />
-                <span className="font-mono font-bold text-sm text-emerald-400 mt-1 block">
-                  {logisticsState.dailyDemand} Units / Day
-                </span>
               </div>
-              <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block mb-1">Lead Time:</span>
+              <div className="bg-zinc-900/60 p-3 rounded-lg border border-zinc-800">
+                <div className="flex justify-between text-zinc-400 mb-1.5 text-[11px]">
+                  <span>Lead Time</span>
+                  <span className="font-mono text-amber-400 font-semibold tabular-nums">{logisticsState.leadTimeDays} Days</span>
+                </div>
                 <input
                   type="range"
                   min="2"
@@ -361,44 +367,39 @@ export const ModernViewport: React.FC<ModernViewportProps> = ({
                   step="1"
                   value={logisticsState.leadTimeDays}
                   onChange={(e) => onLogisticsChange({ ...logisticsState, leadTimeDays: Number(e.target.value) })}
-                  className="w-full accent-amber-500 cursor-pointer"
+                  className="w-full accent-amber-500 cursor-pointer h-1.5 bg-zinc-800 rounded-lg"
                 />
-                <span className="font-mono font-bold text-sm text-amber-400 mt-1 block">
-                  {logisticsState.leadTimeDays} Days
-                </span>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">Optimal Batch Size (EOQ):</span>
-                <span className="font-mono font-bold text-xl text-emerald-400">
+            <div className="grid grid-cols-2 gap-2.5 text-xs">
+              <div className="bg-zinc-900/80 p-3 rounded-lg border border-zinc-800">
+                <span className="text-[11px] text-zinc-500 block mb-0.5">Optimal Batch Size (EOQ)</span>
+                <span className="font-mono font-bold text-base text-zinc-100 tabular-nums">
                   {Math.round(
                     Math.sqrt(
                       (2 * logisticsState.dailyDemand * 365 * logisticsState.orderCost) /
                         Math.max(0.1, logisticsState.holdingCostPerUnit)
                     )
-                  ).toLocaleString()}{' '}
-                  Units
+                  ).toLocaleString()} Units
                 </span>
               </div>
-              <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">Automated Reorder Point:</span>
-                <span className="font-mono font-bold text-xl text-amber-400">
-                  {Math.round(logisticsState.dailyDemand * logisticsState.leadTimeDays + 45).toLocaleString()}{' '}
-                  Units
+              <div className="bg-zinc-900/80 p-3 rounded-lg border border-zinc-800">
+                <span className="text-[11px] text-zinc-500 block mb-0.5">Automated Reorder Point</span>
+                <span className="font-mono font-bold text-base text-amber-400 tabular-nums">
+                  {Math.round(logisticsState.dailyDemand * logisticsState.leadTimeDays + 45).toLocaleString()} Units
                 </span>
               </div>
             </div>
 
-            <div className="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-xs space-y-1 font-mono">
-              <div className="flex justify-between text-slate-400">
+            <div className="p-3 bg-zinc-900/40 rounded-lg border border-zinc-800 text-xs font-mono space-y-1 text-zinc-400">
+              <div className="flex justify-between">
                 <span>Stockout Probability:</span>
-                <span className="text-emerald-400 font-bold">&lt; 0.05% (ISO-9001 Compliant)</span>
+                <span className="text-emerald-400 font-medium">&lt; 0.05% Safety Buffer</span>
               </div>
-              <div className="flex justify-between text-slate-400">
+              <div className="flex justify-between">
                 <span>Annual Inventory Turns:</span>
-                <span className="text-purple-300 font-bold">14.8x / Year</span>
+                <span className="text-zinc-200 font-medium">14.8x / Year</span>
               </div>
             </div>
           </div>

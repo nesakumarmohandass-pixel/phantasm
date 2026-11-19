@@ -2,11 +2,9 @@
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden min-h-screen;
+    @apply bg-zinc-950 text-zinc-100 font-sans antialiased overflow-x-hidden min-h-screen;
     background-image: 
-      radial-gradient(ellipse at 50% 0%, rgba(120, 119, 198, 0.15), transparent 50%),
-      radial-gradient(ellipse at 80% 80%, rgba(249, 115, 22, 0.08), transparent 40%),
-      radial-gradient(ellipse at 10% 70%, rgba(56, 189, 248, 0.08), transparent 40%);
+      radial-gradient(ellipse at 50% -20%, rgba(120, 119, 198, 0.08), transparent 70%);
   }
 }
 
@@ -81,30 +79,15 @@
   pointer-events: none;
 }
 
-/* Modern 2026 Glassmorphism */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.glass-panel-glow {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  box-shadow: 0 0 25px -5px rgba(168, 85, 247, 0.2);
-}
-
-/* Terminal Green Phosphor */
+/* Terminal Green & Amber Phosphor */
 .terminal-amber {
   color: #ffb000;
-  text-shadow: 0 0 5px rgba(255, 176, 0, 0.6);
+  text-shadow: 0 0 4px rgba(255, 176, 0, 0.4);
   font-family: 'Courier New', Courier, monospace;
 }
 
 .terminal-green {
   color: #33ff33;
-  text-shadow: 0 0 5px rgba(51, 255, 51, 0.6);
+  text-shadow: 0 0 4px rgba(51, 255, 51, 0.4);
   font-family: 'Courier New', Courier, monospace;
 }

@@ -58,92 +58,92 @@ describe('PHANTASM Parity Suite: ${preset.name}', () => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in">
-      <div className="max-w-2xl w-full bg-slate-900 border border-purple-500/40 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+      <div className="max-w-xl w-full bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl overflow-hidden flex flex-col">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950">
-          <div className="flex items-center gap-2.5">
-            <FileArchive className="w-5 h-5 text-purple-400" />
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-800 bg-zinc-950">
+          <div className="flex items-center gap-2">
+            <FileArchive className="w-4 h-4 text-purple-400" />
             <div>
-              <h3 className="text-base font-bold text-white m-0">Export Reincarnation Bundle</h3>
-              <p className="text-xs text-slate-400 m-0">
+              <h3 className="text-sm font-semibold text-zinc-100 m-0">Export Reincarnation Bundle</h3>
+              <p className="text-[11px] text-zinc-500 m-0">
                 Production-grade package ready for CI/CD and deployment
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
+            className="text-zinc-500 hover:text-zinc-300 p-1 rounded-md hover:bg-zinc-800 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Deliverables Checklist */}
-        <div className="p-6 space-y-4 text-xs font-mono">
-          <div className="text-slate-300 font-sans text-sm">
-            PHANTASM has bundled the complete modern codebase with governance metadata:
+        <div className="p-5 space-y-3 text-xs font-mono">
+          <div className="text-zinc-300 font-sans text-xs">
+            Bundled modern deliverables with governance metadata:
           </div>
 
-          <div className="space-y-2 bg-slate-950 p-4 rounded-xl border border-slate-800">
+          <div className="space-y-1.5 bg-zinc-950 p-3.5 rounded-lg border border-zinc-800">
             <div className="flex items-center justify-between text-emerald-400">
               <span className="flex items-center gap-2">
-                <Check className="w-4 h-4" />
+                <Check className="w-3.5 h-3.5" />
                 <span>Modern TypeScript Engine (`src/engine.ts`)</span>
               </span>
-              <span className="text-slate-500">React 19 / TypeScript 5.8</span>
+              <span className="text-zinc-600">TypeScript 5.8</span>
             </div>
 
             <div className="flex items-center justify-between text-emerald-400">
               <span className="flex items-center gap-2">
-                <Check className="w-4 h-4" />
+                <Check className="w-3.5 h-3.5" />
                 <span>Automated Parity Test Suite (`tests/parity.test.ts`)</span>
               </span>
-              <span className="text-slate-500">Vitest / Zero-Drift</span>
+              <span className="text-zinc-600">Vitest</span>
             </div>
 
             <div className="flex items-center justify-between text-emerald-400">
               <span className="flex items-center gap-2">
-                <Check className="w-4 h-4" />
-                <span>Kiro Spec Governance (`.kiro/specs/` & `.kiro/steering/`)</span>
+                <Check className="w-3.5 h-3.5" />
+                <span>Kiro Spec Governance (`.kiro/specs/`)</span>
               </span>
-              <span className="text-slate-500">Spec-Driven Rules</span>
+              <span className="text-zinc-600">Spec-Driven</span>
             </div>
 
             <div className="flex items-center justify-between text-emerald-400">
               <span className="flex items-center gap-2">
-                <Check className="w-4 h-4" />
+                <Check className="w-3.5 h-3.5" />
                 <span>Containerized Deployment (`Dockerfile`)</span>
               </span>
-              <span className="text-slate-500">Alpine Node 22</span>
+              <span className="text-zinc-600">Node 22</span>
             </div>
           </div>
 
-          <div className="p-3 bg-purple-950/40 border border-purple-800/60 rounded-xl flex items-center justify-between font-sans">
-            <div className="flex items-center gap-2.5">
-              <Shield className="w-5 h-5 text-purple-400" />
+          <div className="p-3 bg-zinc-950 rounded-lg border border-zinc-800 flex items-center justify-between font-sans">
+            <div className="flex items-center gap-2">
+              <Shield className="w-4 h-4 text-emerald-400" />
               <div>
-                <div className="text-xs font-semibold text-white">Mathematical Invariance Guarantee</div>
-                <div className="text-[11px] text-slate-400">Certified 100.00% state match against {preset.year} baseline</div>
+                <div className="text-xs font-medium text-zinc-200">Mathematical Invariance Guarantee</div>
+                <div className="text-[11px] text-zinc-500">Certified 100.00% state match against {preset.year} baseline</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-slate-800 bg-slate-950 flex items-center justify-end gap-3">
+        <div className="px-5 py-3.5 border-t border-zinc-800 bg-zinc-950 flex items-center justify-end gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-white"
+            className="px-3 py-1.5 rounded-md text-xs text-zinc-400 hover:text-zinc-200"
           >
             Cancel
           </button>
           <button
             onClick={handleDownloadZip}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-lg shadow-purple-600/30 transition-all active:scale-95"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-md text-xs font-medium text-zinc-950 bg-zinc-100 hover:bg-white transition-all shadow-sm active:scale-95"
           >
-            {downloaded ? <Check className="w-4 h-4 text-emerald-300" /> : <Download className="w-4 h-4" />}
-            <span>{downloaded ? 'Bundle Downloaded!' : 'Download Migration Package (.json)'}</span>
+            {downloaded ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Download className="w-3.5 h-3.5" />}
+            <span>{downloaded ? 'Downloaded!' : 'Download Package (.json)'}</span>
           </button>
         </div>
 

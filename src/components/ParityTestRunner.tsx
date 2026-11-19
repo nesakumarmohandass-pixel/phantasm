@@ -101,7 +101,6 @@ export const ParityTestRunner: React.FC = () => {
     setProgress(0);
     sound.playEraTransition();
 
-    // Reset status
     setTests((prev) => prev.map((t) => ({ ...t, status: 'pending', drift: undefined })));
 
     let current = 0;
@@ -134,113 +133,102 @@ export const ParityTestRunner: React.FC = () => {
       sound.playKeyClick();
       current++;
       setProgress(Math.round((current / TEST_VECTORS.length) * 100));
-    }, 180);
+    }, 140);
   };
 
   const passedCount = tests.filter((t) => t.status === 'passed').length;
 
   return (
-    <section className="px-4 lg:px-8 py-6 max-w-7xl mx-auto w-full">
-      <div className="bg-slate-900/90 rounded-2xl border border-slate-800 p-5 shadow-2xl">
-        
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-800 gap-3">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-purple-950/80 border border-purple-700/50 text-purple-400">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono m-0">
-                  Automated Parity Verification Engine (Vitest In-Browser)
-                </h3>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
-                  Float64 Exact
-                </span>
-              </div>
-              <p className="text-xs text-slate-400 m-0">
-                Executes 8 mathematical stress-test vectors comparing 1987-2001 legacy output against modern compiled WASM/TS
-              </p>
-            </div>
-          </div>
+    <div className="bg-zinc-950 rounded-xl border border-zinc-800 p-4">
+      
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-zinc-850 gap-2">
+        <div className="flex items-center gap-2">
+          <ShieldCheck className="w-4 h-4 text-emerald-400" />
+          <span className="text-xs font-semibold text-zinc-200">
+            Automated Mathematical Invariance Test Vectors
+          </span>
+          <span className="text-[10px] font-mono text-zinc-500">
+            (8 Test Cases)
+          </span>
+        </div>
 
-          <div className="flex items-center gap-3">
-            {passedCount > 0 && !isRunning && (
-              <span className="text-xs font-mono text-emerald-400 font-semibold flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4" />
-                <span>{passedCount}/{tests.length} Passed ({totalTimeMs}ms)</span>
-              </span>
+        <div className="flex items-center gap-3">
+          {passedCount > 0 && !isRunning && (
+            <span className="text-xs font-mono text-emerald-400 font-medium flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>{passedCount}/{tests.length} Verified ({totalTimeMs}ms)</span>
+            </span>
+          )}
+
+          <button
+            onClick={runAllTests}
+            disabled={isRunning}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-white transition-all shadow-sm ${
+              isRunning
+                ? 'bg-zinc-800 text-zinc-400 cursor-wait'
+                : 'bg-zinc-100 hover:bg-white text-zinc-950 active:scale-95'
+            }`}
+          >
+            {isRunning ? (
+              <RefreshCw className="w-3 h-3 animate-spin text-zinc-400" />
+            ) : (
+              <Play className="w-3 h-3 fill-current" />
             )}
+            <span>{isRunning ? `Running ${progress}%...` : 'Run Test Suite'}</span>
+          </button>
+        </div>
+      </div>
 
-            <button
-              onClick={runAllTests}
-              disabled={isRunning}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white transition-all shadow-md ${
-                isRunning
-                  ? 'bg-purple-900/50 cursor-wait'
-                  : 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-purple-600/20 active:scale-95'
+      {/* Test Vectors Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 mt-3">
+        {tests.map((test) => {
+          const isPassed = test.status === 'passed';
+          return (
+            <div
+              key={test.id}
+              className={`p-2.5 rounded-lg border font-mono text-xs transition-all ${
+                isPassed
+                  ? 'bg-zinc-900/60 border-zinc-800'
+                  : test.status === 'running'
+                  ? 'bg-purple-950/20 border-purple-500/50 animate-pulse'
+                  : 'bg-zinc-900/30 border-zinc-850'
               }`}
             >
-              {isRunning ? (
-                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-              ) : (
-                <Play className="w-3.5 h-3.5" />
-              )}
-              <span>{isRunning ? `Running (${progress}%)...` : 'Run Parity Verification Suite'}</span>
-            </button>
-          </div>
-        </div>
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-zinc-500 font-bold">{test.id}</span>
+                  <span className="text-zinc-200 text-[11px] font-sans font-medium">{test.name}</span>
+                </div>
+                {isPassed ? (
+                  <span className="text-emerald-400 font-bold text-[10px] flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3" /> PASS
+                  </span>
+                ) : (
+                  <span className="text-zinc-600 text-[10px]">PENDING</span>
+                )}
+              </div>
 
-        {/* Live Test Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
-          {tests.map((test) => {
-            const isPassed = test.status === 'passed';
-            return (
-              <div
-                key={test.id}
-                className={`p-3 rounded-xl border font-mono text-xs transition-all ${
-                  isPassed
-                    ? 'bg-slate-950/80 border-emerald-500/40'
-                    : test.status === 'running'
-                    ? 'bg-purple-950/40 border-purple-500 animate-pulse'
-                    : 'bg-slate-950/40 border-slate-800'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-purple-400 font-bold">{test.id}</span>
-                    <span className="text-slate-200 font-medium text-[11px]">{test.name}</span>
-                  </div>
-                  {isPassed ? (
-                    <span className="text-emerald-400 font-bold text-[10px] flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3" /> PASS
+              <div className="flex items-center justify-between text-[10px] text-zinc-500 pt-1 border-t border-zinc-900">
+                <span className="text-zinc-600">{test.category}</span>
+                <div className="flex items-center gap-3">
+                  {test.latencyMs !== undefined && (
+                    <span className="text-zinc-400 flex items-center gap-0.5">
+                      <Timer className="w-2.5 h-2.5" /> {test.latencyMs}ms
                     </span>
-                  ) : (
-                    <span className="text-slate-500 text-[10px]">PENDING</span>
+                  )}
+                  {test.drift !== undefined && (
+                    <span className="text-emerald-400 font-medium tabular-nums">
+                      Drift: {test.drift.toFixed(6)} Δ
+                    </span>
                   )}
                 </div>
-
-                <div className="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-900">
-                  <span className="text-slate-500">{test.category}</span>
-                  <div className="flex items-center gap-3">
-                    {test.latencyMs !== undefined && (
-                      <span className="text-sky-400 flex items-center gap-0.5">
-                        <Timer className="w-2.5 h-2.5" /> {test.latencyMs}ms
-                      </span>
-                    )}
-                    {test.drift !== undefined && (
-                      <span className="text-emerald-300 font-bold">
-                        Drift: {test.drift.toFixed(6)}
-                      </span>
-                    )}
-                  </div>
-                </div>
               </div>
-            );
-          })}
-        </div>
-
+            </div>
+          );
+        })}
       </div>
-    </section>
+
+    </div>
   );
 };

@@ -97,14 +97,14 @@ export const LegacyViewport: React.FC<LegacyViewportProps> = ({
   const surplus = grossYield - var95;
 
   return (
-    <div className="flex flex-col h-full bg-slate-900/90 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+    <div className="flex flex-col h-full bg-zinc-950 rounded-xl border border-zinc-800/90 overflow-hidden shadow-sm">
       
       {/* Top Era Banner */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-slate-950 border-b border-slate-800 text-xs">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-900/50 border-b border-zinc-800 text-xs">
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
-          <span className="font-mono font-bold text-amber-400 uppercase tracking-wider">
-            Past (Legacy Emulated Engine)
+          <span className="w-2 h-2 rounded-full bg-amber-500" />
+          <span className="font-medium text-zinc-200">
+            Legacy Emulated Environment (1987–2001)
           </span>
         </div>
 
@@ -115,13 +115,13 @@ export const LegacyViewport: React.FC<LegacyViewportProps> = ({
           }}
           className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-mono transition-colors ${
             isCrtEnabled
-              ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-              : 'bg-slate-800 text-slate-400 hover:text-slate-200'
+              ? 'bg-zinc-800 text-amber-400 border border-amber-500/30'
+              : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'
           }`}
           title="Toggle CRT Scanline Shader"
         >
           <Tv className="w-3.5 h-3.5" />
-          <span>CRT Filter: {isCrtEnabled ? 'ON' : 'OFF'}</span>
+          <span>CRT: {isCrtEnabled ? 'ON' : 'OFF'}</span>
         </button>
       </div>
 
